@@ -137,7 +137,7 @@ dialog::backdrop{background:rgba(10,15,30,.5)}
 .amt span{font-size:28px;font-weight:600;color:var(--mut)}
 .amt input{border:0;background:none;outline:0;font-size:42px;font-weight:700;width:100%;max-width:280px;text-align:center;padding:0}
 .hint{text-align:center;color:var(--mut);font-size:13px;min-height:20px;margin-bottom:12px}
-.cg{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;max-height:200px;overflow:auto;margin-bottom:12px;padding:2px}
+.cg{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;max-height:200px;overflow:auto;margin-bottom:12px;padding:2px}
 .cg button{border:1.5px solid transparent;background:none;border-radius:14px;padding:8px 2px;display:flex;flex-direction:column;align-items:center;gap:5px;font-size:11px;font-weight:500;color:var(--ink)}
 .cg button.on{border-color:var(--ink);background:var(--soft)}
 .cg button span:last-child{max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
@@ -147,9 +147,32 @@ dialog::backdrop{background:rgba(10,15,30,.5)}
 .em{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0 12px}
 .em button{width:42px;height:42px;border-radius:12px;border:1.5px solid transparent;background:var(--soft);display:grid;place-items:center;color:var(--ink)}
 .em button.on{border-color:var(--ink)}
-.g2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.g2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px}.g2 .in{min-width:0}
 .toast{position:fixed;left:50%;bottom:calc(100px + env(safe-area-inset-bottom));transform:translateX(-50%);background:var(--ink);color:var(--card);padding:10px 16px;border-radius:12px;font-weight:500;z-index:60}
 .wal{padding:11px 0;border-top:1px solid var(--line)}.wal:first-child{border-top:0}
+
+/* mobile polish */
+html,body{overflow-x:hidden}
+main,.cols>*,.card,.stack>*{min-width:0}
+input,select,textarea{font-size:16px}
+.strip{display:grid;grid-template-columns:repeat(auto-fill,minmax(76px,1fr));gap:12px 6px;overflow:visible;margin:0 0 14px;padding:0}
+.sb{width:auto}
+.io{gap:6px}
+.stats{gap:8px}.stats div{padding:10px}.stats b{font-size:15px}
+.li,.tx,.wal,.bgc,.chip,.seg button,.modes button{min-height:44px}
+.chip{min-height:36px}
+@media(max-width:640px){
+  .hero{padding-left:14px;padding-right:14px}
+  .bal strong{font-size:34px}
+  .card{padding:14px;border-radius:16px}
+  main{padding:0 12px}
+  .stats small{font-size:11px}
+  dialog{width:100%;max-width:none;margin:auto 0 0;border-radius:22px 22px 0 0;max-height:92vh;overflow:auto;animation:up .22s ease-out}
+  .sheet{padding:18px 16px calc(18px + env(safe-area-inset-bottom))}
+  .cg{max-height:230px;grid-template-columns:repeat(3,minmax(0,1fr));overflow-x:hidden}
+  .amt input{font-size:40px}
+}
+@keyframes up{from{transform:translateY(40px);opacity:.4}to{transform:none;opacity:1}}
 </style>
 </head>
 <body>
@@ -212,7 +235,7 @@ const bub = (c, s) => `<span class="bub ${s ? "s" : ""}" style="background:${esc
 
 /* ---------- state ---------- */
 const KEY = "vn-spend-v1";
-const DEFSET = { rate: 273, start: "2026-12-04", end: "2026-12-18" };
+const DEFSET = { rate: 272.98, start: "2026-12-04", end: "2026-12-18" };
 const DEFC = [
   ["food", "food", "Food & Dining", "#e8744f"], ["coffee", "coffee", "Coffee & Drinks", "#a67c52"], ["groc", "groc", "Groceries", "#3fa37a"],
   ["trans", "car", "Transport", "#3b82c4"], ["stay", "bed", "Stay", "#7b6cd9"], ["act", "ticket", "Activities & Tours", "#d9822b"],
@@ -245,6 +268,7 @@ let S;
 try { S = JSON.parse(localStorage.getItem(KEY)); } catch { S = null; }
 if (!S || !S.wallets) S = fresh();
 S.settings = { ...DEFSET, ...S.settings };
+if (S.settings.rate === 273) S.settings.rate = 272.98;
 const persist = () => { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch { toast("Could not save (storage full?)"); } };
 const save = () => { track(); persist(); schedulePush(); };
 let UI = { mode: "all", ref: new Date(), wallet: "all", tab: "overview", q: "", fcat: "", more: "wallets" };
@@ -273,8 +297,8 @@ track(); persist();
 const INRF = new Intl.NumberFormat("en-IN", { style: "currency", currency: "INR", maximumFractionDigits: 0 });
 const money = n => INRF.format(Math.round(n));
 const vnd = n => Math.round(n).toLocaleString("en-US") + " ₫";
-const rate = () => Math.max(+S.settings.rate || 273, 1);
-const inr = t => t.cur === "VND" ? t.amount / rate() : t.amount;
+const rate = () => Math.max(+S.settings.rate || 272.98, 1);
+const inr = t => t.amount;
 const cat = id => S.cats.find(c => c.id === id) || { id, name: "Uncategorised", icon: "dots", color: "#7c8494" };
 const wal = id => S.wallets.find(w => w.id === id) || { id, name: "Removed", icon: "wallet", color: "#7c8494" };
 const sumInr = l => l.reduce((s, t) => s + inr(t), 0);
@@ -504,7 +528,7 @@ function vOverview() {
 const cmpTx = (a, b) => b.date.localeCompare(a.date) || (b.c || 0) - (a.c || 0);
 function txRow(t) {
   const c = cat(t.cat);
-  return `<button class="tx" data-edit="${esc(t.id)}">${bub(c)}<span class="t"><b>${esc(c.name)}</b><small>${esc(wal(t.wallet).name)}${t.note ? " · " + esc(t.note) : ""}</small></span><span class="a num">${money(inr(t))}${t.cur === "VND" ? `<small>${vnd(t.amount)}</small>` : ""}</span></button>`;
+  return `<button class="tx" data-edit="${esc(t.id)}">${bub(c)}<span class="t"><b>${esc(c.name)}</b><small>${esc(wal(t.wallet).name)}${t.note ? " · " + esc(t.note) : ""}</small></span><span class="a num">${money(inr(t))}<small>${vnd(t.amount * rate())}</small></span></button>`;
 }
 function dayLabel(s) {
   const t = dstr(new Date()), y = dstr(addDays(new Date(), -1));
@@ -556,7 +580,7 @@ function vMore() {
   } else {
     body = `<div class="g2"><label class="f">Trip start<input class="in" type="date" id="st" value="${esc(S.settings.start)}"></label><label class="f">Trip end<input class="in" type="date" id="en" value="${esc(S.settings.end)}"></label></div>
       <label class="f">Exchange rate (₫ per ₹1)<input class="in" id="rt" type="number" step="any" min="1" value="${esc(S.settings.rate)}"></label>
-      <p class="muted small" style="margin-top:-6px">Used to convert VND expenses to rupees. Everything is shown in ₹ with the ₫ amount underneath.</p>
+      <p class="muted small" style="margin-top:-6px">You enter rupees; the ₫ equivalent is calculated automatically at this rate (1 ₹ = this many ₫) and shown in small text.</p>
       <h4 style="margin-top:18px">Cloud sync</h4><p class="muted small">${sb ? (cloud.user ? "Signed in as " + esc(cloud.user.email) + "." : "Not signed in — data is saved on this device only.") : "Cloud sync is not configured."}</p>
       ${sb ? `<button class="btn" id="cs">${cloud.user ? "Sync settings" : "Sign in to sync"}</button>` : ""}`;
   }
@@ -582,34 +606,31 @@ function bind(root) {
     if (g("#cs")) return cloudDialog();
   };
   const q = $("#q", root); if (q) q.oninput = () => { UI.q = q.value; const pos = q.selectionStart; render(); const n = $("#q"); n.focus(); n.setSelectionRange(pos, pos); };
-  const st = $("#st", root); if (st) { st.onchange = () => { S.settings.start = st.value; save(); chrome(); }; $("#en").onchange = e => { S.settings.end = e.target.value; save(); chrome(); }; $("#rt").onchange = e => { S.settings.rate = parseFloat(e.target.value) || 273; save(); chrome(); }; }
+  const st = $("#st", root); if (st) { st.onchange = () => { S.settings.start = st.value; save(); chrome(); }; $("#en").onchange = e => { S.settings.end = e.target.value; save(); chrome(); }; $("#rt").onchange = e => { S.settings.rate = parseFloat(e.target.value) || 272.98; save(); chrome(); }; }
 }
 
 /* ---------- dialogs ---------- */
 const CATICONS = ["food", "coffee", "groc", "car", "bed", "ticket", "bag", "plane", "phone", "health", "gift", "dots"];
 const WALICONS = ["cash", "card", "bank", "phone"];
 const COLORS = ["#e8744f", "#a67c52", "#d9822b", "#3fa37a", "#2a9da8", "#3b82c4", "#7b6cd9", "#c75b9b", "#d6485b", "#5b6b8c", "#7c8494"];
-let lastWallet = null, lastCur = "VND";
-try { lastWallet = localStorage.getItem(KEY + "-lw"); lastCur = localStorage.getItem(KEY + "-lc") || "VND"; } catch {}
+let lastWallet = null;
+try { lastWallet = localStorage.getItem(KEY + "-lw"); } catch {}
 const footer = (edit, label = "Save") => `<div class="row between"><span>${edit ? `<button type="button" class="btn bad" id="del">Delete</button>` : ""}</span><span class="row"><button type="button" class="btn ghost" id="x">Cancel</button><button class="btn">${label}</button></span></div>`;
 
 function txnDialog(t) {
   const edit = !!t;
   if (!S.cats.length || !S.wallets.length) { toast("Add a category and payment method first"); UI.tab = "more"; return render(); }
-  t = t ? { ...t } : { amount: "", cur: lastCur, cat: "", wallet: S.wallets.some(w => w.id === lastWallet) ? lastWallet : S.wallets[0].id, date: dstr(new Date()), note: "" };
-  let c = t.cat, cur = t.cur || "VND";
-  const d = sheet(`<form><div class="seg" id="cu"><button type="button" data-k="VND">₫ Vietnamese dong</button><button type="button" data-k="INR">₹ Rupees</button></div>
-    <div class="amt"><span id="sym"></span><input id="am" inputmode="decimal" placeholder="0" autocomplete="off" value="${esc(t.amount)}"></div><div class="hint" id="eq"></div>
+  t = t ? { ...t } : { amount: "", cat: "", wallet: S.wallets.some(w => w.id === lastWallet) ? lastWallet : S.wallets[0].id, date: dstr(new Date()), note: "" };
+  let c = t.cat;
+  const d = sheet(`<form><div class="amt"><span>₹</span><input id="am" inputmode="decimal" placeholder="0" autocomplete="off" value="${esc(t.amount)}"></div><div class="hint" id="eq"></div>
     <div class="f">Category</div><div class="cg" id="cg"></div>
     <div class="g2"><label class="f">Paid with<select class="in" id="wa">${S.wallets.map(w => `<option value="${esc(w.id)}" ${w.id === t.wallet ? "selected" : ""}>${esc(w.name)}</option>`).join("")}</select></label>
     <label class="f">Date<input class="in" type="date" id="dt" value="${esc(t.date)}"></label></div>
     <label class="f">Note<input class="in" id="nt" placeholder="Optional" value="${esc(t.note || "")}"></label>${footer(edit)}</form>`);
   const val = () => parseFloat(String($("#am").value).replace(/,/g, "")) || 0;
-  const hint = () => { const v = val(); $("#eq").textContent = v ? (cur === "VND" ? `≈ ${money(v / rate())}` : `≈ ${vnd(v * rate())}`) : ""; };
-  const drawCur = () => { $("#sym").textContent = cur === "VND" ? "₫" : "₹"; $("#cu").querySelectorAll("button").forEach(b => b.classList.toggle("on", b.dataset.k === cur)); hint(); };
-  const drawCats = () => { $("#cg").innerHTML = S.cats.map(x => `<button type="button" data-c="${esc(x.id)}" class="${x.id === c ? "on" : ""}">${bub(x, 1)}<span>${esc(x.name)}</span></button>`).join(""); };
-  drawCur(); drawCats();
-  $("#cu").onclick = e => { const b = e.target.closest("button"); if (b) { cur = b.dataset.k; drawCur(); } };
+  const hint = () => { const v = val(); $("#eq").textContent = v ? `≈ ${vnd(v * rate())}` : "Enter amount in rupees"; };
+    const drawCats = () => { $("#cg").innerHTML = S.cats.map(x => `<button type="button" data-c="${esc(x.id)}" class="${x.id === c ? "on" : ""}">${bub(x, 1)}<span>${esc(x.name)}</span></button>`).join(""); };
+  hint(); drawCats();
   $("#cg").onclick = e => { const b = e.target.closest("[data-c]"); if (b) { c = b.dataset.c; drawCats(); } };
   $("#am").oninput = hint;
   $("#x", d).onclick = () => d.close();
@@ -619,9 +640,9 @@ function txnDialog(t) {
     const amount = Math.round(val() * 100) / 100;
     if (!(amount > 0)) { toast("Enter an amount"); return $("#am").focus(); }
     if (!c) return toast("Pick a category");
-    const o = { id: t.id || uid(), amount, cur, cat: c, wallet: $("#wa").value, date: $("#dt").value || dstr(new Date()), note: $("#nt").value.trim(), c: t.c || Date.now() };
+    const o = { id: t.id || uid(), amount, cat: c, wallet: $("#wa").value, date: $("#dt").value || dstr(new Date()), note: $("#nt").value.trim(), c: t.c || Date.now() };
     if (edit) { const i = S.txns.findIndex(x => x.id === t.id); S.txns[i] = { ...S.txns[i], ...o }; } else S.txns.push(o);
-    lastWallet = o.wallet; lastCur = cur; try { localStorage.setItem(KEY + "-lw", lastWallet); localStorage.setItem(KEY + "-lc", cur); } catch {}
+    lastWallet = o.wallet; try { localStorage.setItem(KEY + "-lw", lastWallet); } catch {}
     save(); d.close(); render(); toast(edit ? "Saved" : "Expense added");
   };
   d.showModal();
