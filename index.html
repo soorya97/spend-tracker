@@ -4,18 +4,16 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Vietnam Spends</title>
-<meta name="theme-color" content="#f6f7f9">
+<meta name="theme-color" content="#0b0d12">
 <link rel="manifest" href="manifest.json">
 <link rel="icon" href="icon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="icon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#f6f7f9; --card:#fff; --ink:#14171f; --mut:#7a8294; --line:#eceef2; --soft:#f1f3f6;
-  --pri:#2fa86a; --exp:#d64550; --warn:#e29a1f; --sh:0 1px 2px rgba(16,24,40,.04),0 4px 14px rgba(16,24,40,.04);
-}
-@media (prefers-color-scheme:dark){
-  :root{ --bg:#0c0e13; --card:#151820; --ink:#f1f3f8; --mut:#8a92a5; --line:#23272f; --soft:#1d212a; --pri:#3ccf83; --exp:#ff6b72; --sh:none; }
+  color-scheme:dark;
+  --bg:#0b0d12; --card:#14171f; --ink:#eef0f6; --mut:#8b93a6; --line:#222632; --soft:#1c202b;
+  --pri:#3ccf83; --exp:#ff6b72; --warn:#f0b03a; --sh:none;
 }
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;padding-bottom:calc(110px + env(safe-area-inset-bottom))}
@@ -37,7 +35,7 @@ h3{margin:0 0 14px;font-size:18px;font-weight:600}
 .pill .ico{width:16px;height:16px}
 .modes{display:flex;gap:2px;margin:16px 0 8px;background:var(--soft);padding:3px;border-radius:12px}
 .modes button{flex:1;border:0;background:none;color:var(--mut);padding:7px 0;border-radius:9px;font-weight:500;font-size:13px}
-.modes button.on{background:var(--card);color:var(--ink);box-shadow:0 1px 3px rgba(16,24,40,.12);font-weight:600}
+.modes button.on{background:var(--card);color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.4);font-weight:600}
 .pnav{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px}
 .pnav b{font-size:14px;font-weight:600}
 .pnav button{border:1px solid var(--line);background:var(--card);width:32px;height:32px;border-radius:50%;font-size:16px}
@@ -58,7 +56,7 @@ main{max-width:1000px;margin:18px auto 0;padding:0 14px}
 @media(min-width:760px){.cols{grid-template-columns:1fr 1fr}.cols .wide{grid-column:1/-1}}
 .seg{display:flex;background:var(--soft);padding:3px;border-radius:12px;gap:2px}
 .seg button{flex:1;border:0;background:none;padding:7px 10px;border-radius:9px;font-weight:500;font-size:13px;color:var(--mut)}
-.seg button.on{background:var(--card);color:var(--ink);box-shadow:0 1px 3px rgba(16,24,40,.12);font-weight:600}
+.seg button.on{background:var(--card);color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.4);font-weight:600}
 .btn{border:0;background:var(--ink);color:var(--card);font-weight:600;padding:11px 18px;border-radius:12px}
 .btn.ghost{background:var(--soft);color:var(--ink)}
 .btn.bad{background:none;color:var(--exp)}
@@ -114,7 +112,7 @@ input[type=search],.in{width:100%;border:1px solid var(--line);background:var(--
 .tl{display:flex;gap:3px;margin-top:6px;font-size:10px;color:var(--mut)}.tl span{flex:1;text-align:center;overflow:hidden}
 
 /* nav */
-nav{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(14px + env(safe-area-inset-bottom));width:min(440px,calc(100% - 24px));background:color-mix(in srgb,var(--card) 90%,transparent);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);border:1px solid var(--line);border-radius:26px;box-shadow:0 10px 30px rgba(16,24,40,.14);display:flex;justify-content:space-around;align-items:center;padding:6px;z-index:20}
+nav{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(14px + env(safe-area-inset-bottom));width:min(440px,calc(100% - 24px));background:color-mix(in srgb,var(--card) 90%,transparent);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);border:1px solid var(--line);border-radius:26px;box-shadow:0 10px 30px rgba(0,0,0,.5);display:flex;justify-content:space-around;align-items:center;padding:6px;z-index:20}
 nav button{border:0;background:none;color:var(--mut);display:flex;flex-direction:column;align-items:center;gap:2px;font-size:11px;font-weight:500;padding:6px 8px;flex:1}
 nav button.on{color:var(--ink);font-weight:600}nav button.on .ico{stroke:var(--pri)}
 nav .fab{flex:none;width:54px;height:54px;border-radius:50%;background:var(--ink);color:var(--card);margin:-24px 4px 0;padding:0;justify-content:center;box-shadow:0 8px 22px rgba(16,24,40,.28)}
@@ -129,7 +127,7 @@ nav .fab .ico{width:26px;height:26px;stroke:var(--card)!important;stroke-width:2
 
 /* dialog */
 dialog{border:0;border-radius:22px;padding:0;width:calc(100% - 20px);max-width:460px;background:var(--card);color:var(--ink);box-shadow:0 20px 60px rgba(0,0,0,.3);max-height:92vh}
-dialog::backdrop{background:rgba(10,15,30,.5)}
+dialog::backdrop{background:rgba(0,0,0,.65)}
 .sheet{padding:20px}
 .f{display:block;margin:0 0 12px;font-size:12px;font-weight:600;color:var(--mut);text-transform:uppercase;letter-spacing:.4px}
 .f .in{margin-top:5px;text-transform:none;letter-spacing:0;font-weight:400;color:var(--ink)}
