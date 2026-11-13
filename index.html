@@ -8,6 +8,7 @@
 <link rel="manifest" href="manifest.json">
 <link rel="icon" href="icon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="icon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root{
   --bg:#f2f4f9; --card:#fff; --ink:#1b2342; --mut:#7a839d; --line:#e7eaf2; --soft:#f4f6fb;
@@ -157,6 +158,68 @@ dialog::backdrop{background:rgba(10,15,40,.55);backdrop-filter:blur(2px)}
 .wal{display:flex;gap:12px;align-items:center;padding:10px 0;border:0;background:none;width:100%;text-align:left;border-top:1px solid var(--line)}
 .wal:first-child{border-top:0}
 .wal .t{flex:1}.wal .t b{display:block}
+
+/* ===== modern light skin ===== */
+:root{--bg:#f6f7f9;--card:#fff;--ink:#12151c;--mut:#7c8494;--line:#eceef2;--soft:#f1f3f6;--pri:#2fb36d;--inc:#1f9d5c;--exp:#e5484d;--sh:0 1px 2px rgba(16,24,40,.04),0 4px 16px rgba(16,24,40,.04)}
+@media (prefers-color-scheme:dark){:root{--bg:#0b0d12;--card:#151820;--ink:#f2f4f8;--mut:#8b93a5;--line:#23272f;--soft:#1d212a;--pri:#3ccf83;--inc:#3ccf83;--exp:#ff6b70}}
+body{font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;letter-spacing:-.005em;padding-bottom:calc(110px + env(safe-area-inset-bottom))}
+.hero{background:transparent;color:var(--ink);padding:calc(16px + env(safe-area-inset-top)) 16px 4px;border-radius:0}
+.hero-in{max-width:1000px}
+.pill{background:var(--card);color:var(--ink);border:1px solid var(--line);box-shadow:var(--sh);font-weight:600}
+.pill:active{background:var(--soft)}
+.modes{background:var(--soft);margin:18px 0 10px}
+.modes button{color:var(--mut)}
+.modes button.on{background:var(--card);color:var(--ink);box-shadow:0 1px 3px rgba(16,24,40,.12)}
+.pnav b{font-size:15px;font-weight:700}
+.pnav button{background:var(--card);color:var(--ink);border:1px solid var(--line);width:34px;height:34px;font-size:17px}
+.bal{text-align:left;margin:18px 0 0}
+.bal small{opacity:1;color:var(--mut);font-weight:500}
+.bal strong{font-size:44px;font-weight:800;letter-spacing:-1.5px}
+.io{justify-content:flex-start;gap:8px;margin-top:10px;flex-wrap:wrap}
+.io span{opacity:1;display:inline-flex;gap:6px;align-items:center;padding:6px 12px;border-radius:999px;font-size:13px;font-weight:600}
+.io .u{background:rgba(47,179,109,.12);color:var(--inc)}
+.io .d{background:rgba(229,72,77,.11);color:var(--exp)}
+.io b{font-weight:700}
+main{margin:16px auto 0}
+.card{border:1px solid var(--line);box-shadow:var(--sh);border-radius:22px;padding:18px}
+.card h4{font-size:15px;font-weight:700}
+.bub{color:inherit}
+.seg{background:var(--soft)}
+.btn{background:var(--ink);color:var(--card);border-radius:14px;font-weight:600}
+.btn.ghost{background:var(--soft);color:var(--ink)}
+.chip.on{background:var(--ink)}
+.a.e{color:var(--ink)}
+.tx{padding:10px 6px}
+.dh{text-transform:uppercase;font-size:11px;letter-spacing:.6px}
+.link{color:var(--pri)}
+/* budget strip */
+.strip{display:flex;gap:14px;overflow-x:auto;padding:2px 2px 14px;margin:0 -14px 4px;padding-left:14px;padding-right:14px;scrollbar-width:none}
+.strip::-webkit-scrollbar{display:none}
+.sb{flex:none;width:84px;border:0;background:none;text-align:center;padding:0;color:var(--ink)}
+.sb .r{position:relative;width:68px;height:68px;margin:0 auto 6px}
+.sb svg{width:100%;transform:rotate(-90deg)}
+.sb .r span{position:absolute;inset:9px;border-radius:50%;display:grid;place-items:center;font-size:22px}
+.sb b{display:block;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sb small{font-size:11px;color:var(--mut)}
+/* paired bars */
+.trend{height:150px;gap:6px;align-items:flex-end}
+.pb{flex:1;display:flex;align-items:flex-end;gap:2px;height:100%}
+.pb i{flex:1;border-radius:4px 4px 1px 1px;min-height:3px;position:static;opacity:1}
+.pb .g{background:var(--pri)}.pb .r{background:var(--exp)}.pb .z{background:var(--line)}
+.lg{display:flex;gap:12px;font-size:12px;color:var(--mut);font-weight:600}
+.lg i{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:5px}
+/* floating nav */
+nav{left:50%;right:auto;transform:translateX(-50%);bottom:calc(14px + env(safe-area-inset-bottom));width:min(440px,calc(100% - 24px));border:1px solid var(--line);border-radius:28px;background:color-mix(in srgb,var(--card) 86%,transparent);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);box-shadow:0 12px 36px rgba(16,24,40,.16);padding:6px}
+nav button{font-weight:600}
+nav button.on{color:var(--ink)}
+nav button.on svg{stroke:var(--pri)}
+nav .fab{background:var(--ink);color:var(--card);border:0;margin:-26px 2px 0;width:56px;height:56px;box-shadow:0 10px 24px rgba(16,24,40,.3)}
+@media(min-width:900px){
+  body{padding-left:96px;padding-bottom:40px}
+  nav{top:0;bottom:0;left:0;transform:none;width:96px;border-radius:0;border:0;border-right:1px solid var(--line);background:var(--card);box-shadow:none;padding:24px 8px;-webkit-backdrop-filter:none;backdrop-filter:none}
+  nav .fab{margin:0 0 14px}
+  .hero{padding-top:28px}
+}
 </style>
 </head>
 <body>
@@ -272,7 +335,7 @@ function money(n, opt = {}) {
 }
 const cat = id => S.cats.find(c => c.id === id) || { id, name: "Uncategorised", icon: "❔", color: "#9aa3b8", type: "exp" };
 const wal = id => S.wallets.find(w => w.id === id) || { id, name: "Deleted wallet", icon: "👛", color: "#9aa3b8" };
-const bub = (c, s) => `<span class="bub ${s ? "s" : ""}" style="background:${esc(c.color)}">${esc(c.icon)}</span>`;
+const bub = (c, s) => `<span class="bub ${s ? "s" : ""}" style="background:${esc(c.color)}26">${esc(c.icon)}</span>`;
 function balances() {
   const b = {}; S.wallets.forEach(w => b[w.id] = +w.init || 0);
   for (const t of S.txns) {
@@ -443,7 +506,7 @@ function chrome() {
   const bal = UI.wallet === "all" ? Object.values(b).reduce((x, y) => x + y, 0) : (b[UI.wallet] || 0);
   $("#bl").textContent = UI.wallet === "all" ? "Total balance" : wal(UI.wallet).name + " balance";
   $("#bv").textContent = money(bal);
-  $("#io").innerHTML = `<span>Income <b class="i num">${money(t.i)}</b></span><span>Spent <b class="e num">${money(t.e)}</b></span>`;
+  $("#io").innerHTML = `<span class="u">▲ Income <b class="num">${money(t.i)}</b></span><span class="d">▼ Spent <b class="num">${money(t.e)}</b></span>`;
   const n = $("#nav");
   const btn = ([id, ic, l]) => `<button data-t="${id}" class="${UI.tab === id ? "on" : ""}">${ico(ic)}${l}</button>`;
   n.innerHTML = btn(TABS[0]) + btn(TABS[1]) + `<button class="fab" data-add="1" aria-label="Add transaction">${ico("plus")}</button>` + btn(TABS[2]) + btn(TABS[3]);
@@ -492,26 +555,28 @@ function vOverview() {
   const rows = [...by.entries()].map(([id, v]) => ({ c: cat(id), v })).sort((a, b) => b.v - a.v);
   const total = rows.reduce((s, r) => s + r.v, 0);
   let off = 0;
-  const arcs = rows.map(r => { const p = r.v / total * 100, s = `<circle cx="21" cy="21" r="15.915" fill="none" stroke="${esc(r.c.color)}" stroke-width="6.5" stroke-dasharray="${Math.max(p - (rows.length > 1 ? .6 : 0), .01)} ${100 - Math.max(p - (rows.length > 1 ? .6 : 0), .01)}" stroke-dashoffset="${-off}"/>`; off += p; return s; }).join("");
-  const donut = total ? `<div class="dwrap"><svg viewBox="0 0 42 42"><circle cx="21" cy="21" r="15.915" fill="none" stroke="var(--soft)" stroke-width="6.5"/>${arcs}</svg><div class="dmid"><small>${type === "exp" ? "Spent" : "Earned"}</small><b class="num">${money(total)}</b></div></div>`
+  const arcs = rows.map(r => { const p = r.v / total * 100, s = `<circle cx="21" cy="21" r="15.915" fill="none" stroke="${esc(r.c.color)}" stroke-width="4.8" stroke-dasharray="${Math.max(p - (rows.length > 1 ? .6 : 0), .01)} ${100 - Math.max(p - (rows.length > 1 ? .6 : 0), .01)}" stroke-dashoffset="${-off}"/>`; off += p; return s; }).join("");
+  const donut = total ? `<div class="dwrap"><svg viewBox="0 0 42 42"><circle cx="21" cy="21" r="15.915" fill="none" stroke="var(--soft)" stroke-width="4.8"/>${arcs}</svg><div class="dmid"><small>${type === "exp" ? "Spent" : "Earned"}</small><b class="num">${money(total)}</b></div></div>`
     : emptyBox(type === "exp" ? "🧾" : "💰", "Nothing here yet", "Add your first " + (type === "exp" ? "expense" : "income") + " for this period.", `<button class="btn" data-add="1">Add transaction</button>`);
   const legend = rows.map(r => `<button class="li" data-cat="${esc(r.c.id)}">${bub(r.c)}<span class="t"><b>${esc(r.c.name)}</b><small>${(r.v / total * 100).toFixed(r.v / total < .1 ? 1 : 0)}% · ${by.size && mine.filter(t => t.cat === r.c.id).length} txn${mine.filter(t => t.cat === r.c.id).length === 1 ? "" : "s"}</small></span><span class="a num">${money(r.v)}</span></button>`).join("");
-  const bk = buckets(type), mx = Math.max(...bk.map(b => b.v), 1);
-  const trend = `<div class="trend">${bk.map(b => `<i class="${b.v ? "" : "z"}" style="height:${b.v ? Math.max(b.v / mx * 100, 4) : 2}%;background:${type === "exp" ? "var(--exp)" : "var(--inc)"};${b.v ? "" : "background:var(--line)"}" title="${esc(b.n)}: ${money(b.v)}"></i>`).join("")}</div><div class="tl">${bk.map(b => `<span>${b.l}</span>`).join("")}</div>`;
-  const bgs = S.budgets.map(b => ({ b, ...bstat(b) })).sort((x, y) => y.pct - x.pct).slice(0, 3);
-  const bgCard = bgs.length ? `<section class="card"><h4>Budgets <button class="link" data-go="budgets">See all</button></h4>${bgs.map(x => budgetRow(x)).join("")}</section>` : "";
+  const bE = buckets("exp"), bI = buckets("inc"), mx = Math.max(...bE.map(b => b.v), ...bI.map(b => b.v), 1);
+  const bar = (v, c, n) => `<i class="${v ? c : "z"}" style="height:${v ? Math.max(Math.sqrt(v / mx) * 100, 8) : 2}%" title="${esc(n)}: ${money(v)}"></i>`;
+  const trend = `<div class="trend">${bE.map((b, i) => `<div class="pb">${bar(bI[i].v, "g", bI[i].n)}${bar(b.v, "r", b.n)}</div>`).join("")}</div><div class="tl">${bE.map(b => `<span>${b.l}</span>`).join("")}</div>`;
+  const bgs = S.budgets.map(b => ({ b, ...bstat(b) })).sort((x, y) => y.pct - x.pct);
+  const strip = bgs.length ? `<div class="strip">${bgs.map(({ b, left, pct }) => { const col = pct > 1 ? "var(--exp)" : pct > .75 ? "var(--warn)" : "var(--pri)", c0 = b.cats?.length === 1 ? cat(b.cats[0]) : null;
+    return `<button class="sb" data-go="budgets"><div class="r"><svg viewBox="0 0 42 42"><circle cx="21" cy="21" r="18" fill="none" stroke="var(--line)" stroke-width="3"/><circle cx="21" cy="21" r="18" fill="none" stroke="${col}" stroke-width="3" stroke-linecap="round" stroke-dasharray="${Math.min(pct, 1) * 113.1} 113.1"/></svg><span style="background:${c0 ? esc(c0.color) + "26" : "var(--soft)"}">${c0 ? esc(c0.icon) : "🎯"}</span></div><b>${esc(b.name)}</b><small class="${left < 0 ? "over" : ""}">${left < 0 ? "Over " + money(-left) : money(left) + " left"}</small></button>`; }).join("")}</div>` : "";
   const recent = [...list].sort(cmpTx).slice(0, 5);
   const rec = recent.length ? `<section class="card wide"><h4>Latest <button class="link" data-go="txns">See all</button></h4>${recent.map(txRow).join("")}</section>` : "";
-  return `<div class="cols">
+  return `${strip}<div class="cols">
     <section class="card"><div class="seg" style="margin-bottom:6px"><button data-ty="exp" class="${type === "exp" ? "on" : ""}">Expenses</button><button data-ty="inc" class="${type === "inc" ? "on" : ""}">Income</button></div>${donut}<div class="leg">${legend}</div></section>
-    <div style="display:flex;flex-direction:column;gap:14px"><section class="card"><h4>${type === "exp" ? "Spending" : "Income"} trend</h4>${trend}</section>${bgCard}</div>
+    <div style="display:flex;flex-direction:column;gap:14px"><section class="card"><h4>Cash flow <span class="lg"><span><i style="background:var(--pri)"></i>Income</span><span><i style="background:var(--exp)"></i>Spent</span></span></h4>${trend}</section></div>
     ${rec}</div>`;
 }
 
 const cmpTx = (a, b) => b.date.localeCompare(a.date) || (b.c || 0) - (a.c || 0);
 function txRow(t) {
   const sign = t.type === "inc" ? "+" : t.type === "exp" ? "−" : "";
-  if (t.type === "xfer") return `<button class="tx" data-edit="${esc(t.id)}"><span class="bub" style="background:#6c7a99">⇄</span><span class="t"><b>Transfer</b><small>${esc(wal(t.wallet).name)} → ${esc(wal(t.to).name)}${t.note ? " · " + esc(t.note) : ""}</small></span><span class="a x num">${money(t.amount)}</span></button>`;
+  if (t.type === "xfer") return `<button class="tx" data-edit="${esc(t.id)}"><span class="bub" style="background:#6c7a9926;color:var(--mut)">⇄</span><span class="t"><b>Transfer</b><small>${esc(wal(t.wallet).name)} → ${esc(wal(t.to).name)}${t.note ? " · " + esc(t.note) : ""}</small></span><span class="a x num">${money(t.amount)}</span></button>`;
   const c = cat(t.cat);
   return `<button class="tx" data-edit="${esc(t.id)}">${bub(c)}<span class="t"><b>${esc(c.name)}</b><small>${esc(wal(t.wallet).name)}${t.note ? " · " + esc(t.note) : ""}</small></span><span class="a ${t.type === "inc" ? "i" : "e"} num">${sign}${money(t.amount)}</span></button>`;
 }
